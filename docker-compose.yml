@@ -1,12 +1,10 @@
-version: "3.9"
-
 services:
   backend:
     build: ./Server Side
     ports:
       - "3000:3000"
     environment:
-      DB_HOST: localhost
+      DB_HOST: db
       DB_USER: root
       DB_PASS: Qwerty@123
       DB_NAME: employeems
