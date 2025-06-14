@@ -1,40 +1,36 @@
+#version: "3.8"
+
 services:
-  backend:
-    build: ./Server Side
-    ports:
-      - "3000:3000"
-    environment:
-      DB_HOST: localhost
-      DB_USER: root
-      DB_PASS: Qwerty@123
-      DB_NAME: employeems
-      PORT: 3000
-    depends_on:
-      - db
-    volumes:
-      - ./Server Side:/app
-    restart: unless-stopped
-
-  frontend:
-    build: ./Front-End Folder
-    ports:
-      - "5173:5173"
-    volumes:
-      - ./Front-End Folder:/app
-    depends_on:
-      - backend
-    restart: unless-stopped
-
   db:
-    image: mysql:8.0
-    ports:
-      - "3306:3306"
+    image: mysql:5.7
     environment:
       MYSQL_ROOT_PASSWORD: Qwerty@123
       MYSQL_DATABASE: employeems
+    ports:
+      - "3308:3306"
     volumes:
-      - dbdata:/var/lib/mysql
-    restart: unless-stopped
+      - mysql-data:/var/lib/mysql
+
+  backend:
+    build:
+      context: ./Server Side
+    environment:
+      DB_HOST: db
+      DB_USER: root
+      DB_PASS: Qwerty@123
+      DB_NAME: employeems
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+
+  frontend:
+    build:
+      context: ./front-end
+    ports:
+      - "6400:80"
+    depends_on:
+      - backend
 
 volumes:
-  dbdata:
+  mysql-data:
