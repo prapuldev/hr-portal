@@ -13,4 +13,4 @@ COPY . .
 EXPOSE 3000
 
 # Wait for MySQL before starting backend
-CMD wait-port db:3306 && pm2-runtime index.js
+CMD wait-port 192.168.20.126:3306 && pm2-runtime index.js

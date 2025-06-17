@@ -1,28 +1,16 @@
 version: "3.8"
 
 services:
-  db:
-    image: mysql:5.7
-    environment:
-      MYSQL_ROOT_PASSWORD: Qwerty@123
-      MYSQL_DATABASE: employeems
-    ports:
-      - "3308:3306"
-    volumes:
-      - mysql-data:/var/lib/mysql
-
   backend:
     build:
       context: ./Server Side
     environment:
-      DB_HOST: db
+      DB_HOST: 192.168.20.126 # Host machine IP
       DB_USER: root
       DB_PASS: Qwerty@123
       DB_NAME: employeems
     ports:
       - "3000:3000"
-    depends_on:
-      - db
 
   frontend:
     build:
@@ -40,6 +28,3 @@ services:
     depends_on:
       - frontend
       - backend
-
-volumes:
-  mysql-data:
