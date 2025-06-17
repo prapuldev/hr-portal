@@ -20,14 +20,14 @@ pipeline {
     stage('Build Docker Images') {
       steps {
         echo " Building Docker images for frontend and backend..."
-        sh "docker compose -f $DOCKER_COMPOSE_PATH build"
+        sh 'docker compose -f docker-compose.yml build'
       }
     }
 
     stage('Deploy Services') {
       steps {
         echo " Deploying application using Docker Compose..."
-        sh "docker compose -f $DOCKER_COMPOSE_PATH up -d"
+        sh 'docker compose -f docker-compose.yml build'
       }
     }
 
