@@ -6,15 +6,14 @@ pipeline {
   }
 
   options {
-    timestamps() // Adds timestamps to console output
-    ansiColor('xterm') // Enables colored output in terminal
+    timestamps()
   }
 
   stages {
     stage('Checkout Source Code') {
       steps {
-        echo "📥 Checking out source code..."
-        checkout scm // Assumes Jenkins pulls the Git repo
+        echo " Checking out source code..."
+        checkout scm 
       }
     }
 
@@ -44,13 +43,13 @@ pipeline {
 
   post {
     success {
-      echo " Deployment successful!"
+      echo "Deployment successful!"
     }
     failure {
-      echo " Deployment failed. Please check the logs."
+      echo "Deployment failed. Please check the logs."
     }
     always {
-      echo " Pipeline execution completed."
+      echo "Pipeline execution completed."
     }
   }
 }
