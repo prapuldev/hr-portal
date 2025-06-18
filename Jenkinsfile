@@ -2,52 +2,44 @@ pipeline {
   agent any
 
   environment {
-    DOCKER_COMPOSE_PATH = 'hr-portal/docker-compose.yml'
-  }
-
-  options {
-    timestamps()
+    PROJECT_ROOT = "${WORKSPACE}"
   }
 
   stages {
-    stage('Checkout Source Code') {
+    stage('Clone Repository') {
       steps {
-        echo " Checking out source code..."
-        checkout scm 
+        git 'https://github.com/prapuldev/hr-portal.git'
       }
     }
+
+    // stage('Install Frontend Dependencies and Build') {
+    //   steps {
+    //     dir('front-end') {
+    //       sh 'npm install'
+    //       sh 'npm run build'
+    //     }
+    //   }
+    // }
+
+    // stage('Install Backend Dependencies') {
+    //   steps {
+    //     dir('Server Side') {
+    //       sh 'npm install'
+    //     }
+    //   }
+    // }
 
     stage('Build Docker Images') {
       steps {
-        echo " Building Docker images for frontend and backend..."
-        sh 'docker compose -f docker-compose.yml build'
+        sh 'docker-compose build'
       }
     }
 
-    stage('Deploy Services') {
+    stage('Restart Containers') {
       steps {
-        echo " Deploying application using Docker Compose..."
-        sh 'docker compose -f docker-compose.yml build'
+        sh 'docker-compose down'
+        sh 'docker-compose up -d'
       }
-    }
-
-    stage('Verify Services') {
-      steps {
-        echo " Verifying running containers..."
-        sh "docker ps"
-      }
-    }
-  }
-
-  post {
-    success {
-      echo "Deployment successful!"
-    }
-    failure {
-      echo "Deployment failed. Please check the logs."
-    }
-    always {
-      echo "Pipeline execution completed."
     }
   }
 }
