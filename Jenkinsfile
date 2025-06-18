@@ -15,7 +15,7 @@ pipeline {
 
     stage('Restart Containers') {
       steps {
-        sh 'docker compose down'
+        
         sh 'docker compose up -d'
       }
     }
