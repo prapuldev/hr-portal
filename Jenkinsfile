@@ -6,11 +6,11 @@ pipeline {
   }
 
   stages {
-    stage('Clone Repository') {
-      steps {
-        git 'https://github.com/prapuldev/hr-portal.git'
-      }
-    }
+    // stage('Clone Repository') {
+    //   steps {
+    //     git 'https://github.com/prapuldev/hr-portal.git'
+    //   }
+    // }
 
     // stage('Install Frontend Dependencies and Build') {
     //   steps {
